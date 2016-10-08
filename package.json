@@ -13,6 +13,7 @@
     "cheerio-tableparser": "^1.0.1",
     "express": "latest",
     "json2csv": "^3.7.0",
-    "request": "latest"
+    "request": "latest",
+    "utf8": "^2.1.1"
   }
 }

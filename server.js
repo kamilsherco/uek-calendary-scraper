@@ -4,7 +4,6 @@ var request = require('request');
 var cheerio = require('cheerio');
 var cheerioTableparser = require('cheerio-tableparser');
 var json2csv = require('json2csv');
-var encoding = require("encoding");
 var utf8 = require('utf8');
 var app     = express();
 
@@ -21,55 +20,59 @@ app.get('/scrape', function(req, res){
       var calendaryformat={Subject:"",}
 
       cheerioTableparser($);
-      var data1 = $("table").parsetable();
-      console.log(data1[0][1]);
-      console.log(data1[4][1]);
-      var result = utf8.encode(data1[3][3]);
+      var dataFromHtml = $("table").parsetable();
+      console.log(dataFromHtml[0][1]);
+      console.log(dataFromHtml[4][1]);
+      var result = utf8.encode(dataFromHtml[3][3]);
       console.log(result);
-      var fields = ['Subject', 'Start date', 'Start time','End date', 'End Time'];
+      var fields = ['Subject','Description', 'Start date', 'Start time','End date', 'End Time'];
       var calendary = [];
-      var str = data1[1][1];
-      var arr = str.split(" ");
-      var des="";
-      var teacherData = data1[4][3];
-      var arr1 = teacherData.split("<");
-      var teacher=arr1[0];
+	  var subject="";
+      var dateString = dataFromHtml[1][1];
+      var dateArray = dateString.split(" ");
+      var description="";
+      var teacherString = dataFromHtml[4][3];
+      var teacherData = teacherString.split("<");
+      var teacher=teacherData[0];
       console.log(teacher);
 
 
 
-      for (var i = 1; i < data1[0].length; i++) {
-        str = data1[1][i];
-        arr = str.split(" ");
-        if (data1[0][i] !== "") {
+      for (var i = 1; i < dataFromHtml[0].length; i++) {
+        dateString = dataFromHtml[1][i];
+        dateArray = dateString.split(" ");
+        if (dataFromHtml[0][i] !== "") {
 
-          if(data1[2][i]==="" && data1[3][i]==="lektorat"){
-            des=data1[4][i];
+          if(dataFromHtml[2][i]==="" && dataFromHtml[3][i]==="lektorat"){
+            subject=dataFromHtml[4][i];
           }else{
-            teacherData=data1[4][i];
-            arr1 = teacherData.split("<");
-            teacher = arr1[0]
-            if(data1[2][i]!==""){
-              des+=data1[2][i]+", ";
+            teacherString=dataFromHtml[4][i];
+            teacherData = teacherString.split("<");
+            teacher = teacherData[0];
+			teacher=teacher.slice(0, -1);
+            if(dataFromHtml[2][i]!==""){
+              subject+=dataFromHtml[2][i];
+            }
+			description+=teacher+", ";
+            if (dataFromHtml[2][i] !== "") {
+              description += dataFromHtml[3][i]+", ";
             }
 
-            if (data1[2][i] !== "") {
-              des += data1[3][i]+", ";
-            }
-
-            des+=teacher+", "+data1[5][i];
+            description+=dataFromHtml[5][i];
           }
 
           calendary.push({
 
-            "Subject": des,
-            "Start date": data1[0][i],
-            "Start time": arr[1],
-            "End date": data1[0][i],
-            "End Time": arr[3]
+            "Subject": subject,
+			"Description":description,
+            "Start date": dataFromHtml[0][i],
+            "Start time": dateArray[1],
+            "End date": dataFromHtml[0][i],
+            "End Time": dateArray[3]
 
           });
-          des="";
+          description="";
+		  subject="";
         }
       }
 
