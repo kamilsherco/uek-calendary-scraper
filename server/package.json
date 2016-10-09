@@ -1,18 +1,22 @@
 {
-  "name": "node-web-scrape",
+  "name": "uek-calendary-scraper",
   "version": "0.0.1",
-  "description": "Scrape le web.",
+  "description": "Scrape UEK calendary.",
   "main": "server.js",
-  "author": "Scotch",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Kamil Zabrzeski",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scotch-io/node-web-scraper"
+    "url": ""
   },
   "dependencies": {
     "cheerio": "^0.22.0",
     "cheerio-tableparser": "^1.0.1",
     "express": "latest",
     "json2csv": "^3.7.0",
+    "path": "^0.12.7",
     "request": "latest",
     "utf8": "^2.1.1"
   }

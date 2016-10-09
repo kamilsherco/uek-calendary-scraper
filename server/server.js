@@ -21,10 +21,7 @@ app.get('/scrape', function(req, res){
 
       cheerioTableparser($);
       var dataFromHtml = $("table").parsetable();
-      console.log(dataFromHtml[0][1]);
-      console.log(dataFromHtml[4][1]);
-      var result = utf8.encode(dataFromHtml[3][3]);
-      console.log(result);
+
       var fields = ['Subject','Description', 'Start date', 'Start time','End date', 'End Time'];
       var calendary = [];
 	  var subject="";
@@ -34,10 +31,7 @@ app.get('/scrape', function(req, res){
       var teacherString = dataFromHtml[4][3];
       var teacherData = teacherString.split("<");
       var teacher=teacherData[0];
-      console.log(teacher);
-
-
-
+   
       for (var i = 1; i < dataFromHtml[0].length; i++) {
         dateString = dataFromHtml[1][i];
         dateArray = dateString.split(" ");
@@ -76,22 +70,18 @@ app.get('/scrape', function(req, res){
         }
       }
 
- 
-
+		var d = new Date(); 
+		var path= 'calendary/'+d.getTime()+'.csv';
       var csv = json2csv({ data: calendary, fields: fields });
-
-      fs.writeFile('file.csv', csv, 'utf8',function (err) {
+	
+      fs.writeFile(path, csv, 'utf8',function (err) {
         if (err) throw err;
         console.log('file saved');
       })
 
     }
-
-    fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
-      console.log('File successfully written! - Check your project directory for the output.json file');
-    })
-
-    res.send('Check your console!')
+	var response={url:path,status:"ok"};
+    res.send(JSON.stringify(response));
   })
 })
 
