@@ -4,20 +4,13 @@
   "description": "Scrape UEK calendary.",
   "main": "server.js",
   "scripts": {
+    "install":"cd server && npm install && cd .. && cd client && npm install",
     "start": "node server/server.js"
   },
   "author": "Kamil Zabrzeski",
   "repository": {
     "type": "git",
     "url": ""
-  },
-  "dependencies": {
-    "cheerio": "^0.22.0",
-    "cheerio-tableparser": "^1.0.1",
-    "express": "latest",
-    "json2csv": "^3.7.0",
-    "path": "^0.12.7",
-    "request": "latest",
-    "utf8": "^2.1.1"
   }
+
 }
