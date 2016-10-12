@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.home', ['ngRoute'])
 
         .config(['$routeProvider', function ($routeProvider) {
-                $routeProvider.when('/view1', {
-                    templateUrl: 'view1/view1.html',
-                    controller: 'View1Ctrl'
+                $routeProvider.when('/home', {
+                    templateUrl: 'views/home.html',
+                    controller: 'HomeCtrl'
                 });
             }])
 
-        .controller('View1Ctrl', ['$http', '$scope', function ($http, $scope) {
+        .controller('HomeCtrl', ['$http', '$scope', function ($http, $scope) {
                 $scope.update = function (urlToScrape) {
 
                     $scope.url = "";

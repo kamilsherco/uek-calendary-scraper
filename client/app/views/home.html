@@ -1,0 +1,19 @@
+<div ng-cloak ng-controller="HomeCtrl" >
+<div layout="row" layout-align="center center" style="min-height:800px">
+  <div layout="column" >
+  <md-content layout-gt-sm="row" layout-padding>
+    <div>
+      <md-input-container >
+        <label>Wpisz grupę</label>
+        <input ng-model="calendary.url">
+      </md-input-container>
+
+      <md-input-container>
+        <md-button class="md-raised" ng-click="update(calendary)">Button</md-button>
+      </md-input-container>
+    </div>
+  </md-content>
+  <div  style="text-align: center"> <a download="calendary.cvs" ng-href="{{ url }}">Download</a></div>
+ </div>
+</div>
+</div>
